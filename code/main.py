@@ -907,16 +907,16 @@ def Performance_metrics(opFilePath: str, ss: SingleStageCore, fs: FiveStageCore)
     ss_metrics = [
         "Single Stage Core Performance Metrics: ",
         f"Number of Cycles taken:  {ss.cycle}",
-        f"Number of Instruction:  {ssCore.inst}",
+        f"Number of Instructions:  {ss.inst}",
         f"Cycles per instruction (CPI):  {(ss.cycle)/ss.inst}",
-        f"Instructions per cycle (IPC):  {ss.inst/(ssCore.cycle)}",
+        f"Instructions per cycle (IPC):  {ss.inst/ss.cycle}",
     ]
 
     
     fs_metrics = [
         "Five Stage Core Performance Metrics:",
         f"Number of Cycles taken:  {fs.cycle}",
-        f"Number of Instructions:  {fsCore.num_instr}",
+        f"Number of Instructions:  {fs.num_instr}",
         f"Cycles per instruction (CPI): {fs.cycle / fs.num_instr}",
         f"Instructions per cycle (IPC): {fs.num_instr / fs.cycle}",
     ]
@@ -985,17 +985,6 @@ if __name__ == "__main__":
     
     # dump FS data mem.
     dmem_fs.ioDir = outputDir
-    dmem_fs.outputDataMem()
-
-    while True:
-        if not fsCore.halted:
-            fsCore.step()
-
-        if fsCore.halted:
-            break
-    
-    # Dump FS data memory
-    dmem_fs.ioDir = outputDir  # Update output folder path
     dmem_fs.outputDataMem()
 
    # Print performance metrics to terminal
